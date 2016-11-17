@@ -31,7 +31,7 @@ public:
 	enfermedad ();
 
 	/** @brief Constructor de la clase enfermedad. Asigna @a name, @a ID y @a database a los atributos 
-	*	 del objeto creado.
+	*	   del objeto creado.
 	*   @param name Nombre de la enfermedad.
 	*   @param ID Identificador de la enfermedad.
 	*   @param database La base de datos donde se encuentra la información.
@@ -90,7 +90,7 @@ public:
 	bool operator!=(const enfermedad & e) const;
 	
 	/** @brief Sobrecarga del operador menor estricto. ¿Es una enfermedad menor que la enfermedad @a e?
-	*	 Se sigue el orden alfabetico teniendo en cuenta el atributo name.
+	*	   Se sigue el orden alfabetico teniendo en cuenta el atributo name.
 	*   @param e Enfermedad con la que se desea comparar.
 	*   @return Verdadero o Falso
 	*/
@@ -101,18 +101,19 @@ public:
 	*   @return Verdadero o Falso
 	*/
 	bool nameContains(const string & str) const;
+
+	/** @brief Sobrecarga del operador de extracción de flujo. Inserta en @a os todos los valores
+	*	   de los atributos de @a e.	
+	*   @param os Un flujo de salida
+	*   @param e Enfermedad de la que se desea extraer información
+	*   @return Un flujo de salida co la informacion de la enfermedad.
+	*/
+	friend ostream& operator<< ( ostream& os, const enfermedad & e);
 };	
 
-/** @brief Sobrecarga del operador de extracción de flujo. Inserta en @a os todos los valores
-*	 de los atributos de @a e.	
-*   @param os Un flujo de salida
-*   @param e Enfermedad de la que se desea extraer información
-*   @return Un flujo de salida co la informacion de la enfermedad.
-*/
-ostream& operator<< ( ostream& os, const enfermedad & e); //imprime enfermedad (con TODOS sus campos)
+ //imprime enfermedad (con TODOS sus campos)
 
 
-//#include "enfermedad.hxx" // Incluimos la implementacion.
-#include "enfermedad2.hpp"
+#include "enfermedad.hxx"
 
 #endif

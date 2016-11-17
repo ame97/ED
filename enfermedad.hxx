@@ -16,7 +16,7 @@ enfermedad::enfermedad(){
 /** @brief Constructor de la clase enfermedad. Asigna @a name, @a ID y @a database a los atributos del objeto creado.
 *   @param name Nombre de la enfermedad.
 *   @param ID Identificador de la enfermedad.
-*   @param database La base de datos donde se encuentra la informaciÃ³n.
+*   @param database La base de datos donde se encuentra la información.
 */
 enfermedad::enfermedad(const string & name, const string & ID, const string & database){
 	setName(name);
@@ -57,7 +57,7 @@ string enfermedad::getID( )const{
 	return ID;
 }
 
-/** @brief Deuelve donde se encuentra la informaciÃ³n de la enfermedad.
+/** @brief Deuelve donde se encuentra la información de la enfermedad.
 *   @return El atributo name del objeto.
 */
 string enfermedad::getDatabase( )const{
@@ -65,8 +65,8 @@ string enfermedad::getDatabase( )const{
 }
 
 
-/** @brief Sobrecarga del operador de asignaciÃ³n. Realiza la asignacion de una enfermedad a otra asignando
-*	 parÃ¡metro por parÃ¡metro.
+/** @brief Sobrecarga del operador de asignación. Realiza la asignacion de una enfermedad a otra asignando
+*	 parámetro por parámetro.
 *   @param e Enfermedad que se desea asignar.
 *   @return Devuelve una referencia al objeto.
 */
@@ -81,14 +81,14 @@ enfermedad & enfermedad::operator=(const enfermedad & e){
 }
 
 /** @brief Pasa a una cadena todos los atributos de una enfermedad.
-*   @return Un string con toda la informaciÃ³n de la enfermedad.
+*   @return Un string con toda la información de la enfermedad.
 */
 string enfermedad::toString() const{
 	return (getName() + "/" + getID() + "/" + getDatabase());
 }
 
 
-/** @brief Sobrecarga del operador de igualdad. Â¿Es una enfermedad igual que la enfermedad @a e?.
+/** @brief Sobrecarga del operador de igualdad. ¿Es una enfermedad igual que la enfermedad @a e?.
 *  @param e Enfermedad con la que se desea comparar.
 *  @return Verdadero o Falso
 */
@@ -96,7 +96,7 @@ bool enfermedad::operator==(const enfermedad & e) const{
 	return (getID() == e.getID());
 }
 
-/** @brief Sobrecarga del operador de desigualdad. Â¿Es una enfermedad distinta a la enfermedad @a e?.
+/** @brief Sobrecarga del operador de desigualdad. ¿Es una enfermedad distinta a la enfermedad @a e?.
 *   @param e Enfermedad con la que se desea comparar.
 *   @return Verdadero o Falso
 */
@@ -104,7 +104,7 @@ bool enfermedad::operator!=(const enfermedad & e) const{
 	return (getID() != e.getID());
 }
 
-/** @brief Sobrecarga del operador menor estricto. Â¿Es una enfermedad menor que la enfermedad @a e?
+/** @brief Sobrecarga del operador menor estricto. ¿Es una enfermedad menor que la enfermedad @a e?
 *	 Se sigue el orden alfabetico teniendo en cuenta el atributo name.
 *   @param e Enfermedad con la que se desea comparar.
 *   @return Verdadero o Falso
@@ -113,13 +113,13 @@ bool enfermedad::operator<(const enfermedad & e) const{
 	return (getName() < e.getName());
 }
 
-/** @brief Â¿El nombre de la enfermedad contiene @a str?
+/** @brief ¿El nombre de la enfermedad contiene @a str?
 *   @param str Cadena que se busca en el nombre de la enfermedad
 *   @return Verdadero o Falso
 */
 bool enfermedad::nameContains(const string & str) const{
-	//Devuelve True si str está incluido en el nombre de la enfermedad, aunque no se trate del nombre completo
-	//No debe ser sensible a mayÃºsculas/minúsculas
+	//Devuelve True si str estᡩncluido en el nombre de la enfermedad, aunque no se trate del nombre completo
+	//No debe ser sensible a mayúsculas/min򳣵las
 	string s1, s2;
 	
 	for (unsigned int i = 0 ; i < str.size() ; i++)
@@ -131,10 +131,10 @@ bool enfermedad::nameContains(const string & str) const{
 	return (s2.find(s1) != string::npos);
 }
 
-/** @brief Sobrecarga del operador de extracciÃ³n de flujo. Inserta en @a os todos los valores de los atributos de @a e.
+/** @brief Sobrecarga del operador de extracción de flujo. Inserta en @a os todos los valores de los atributos de @a e.
 *   @param os Un flujo de salida
-*   @param e Enfermedad de la que se desea extraer información
-*   @return Un flujo de salida con la informacion de la enfermedad.
+*   @param e Enfermedad de la que se desea extraer informaci󮍊*   @return Un flujo de salida con la informacion
+*	     de la enfermedad.
 */
  ostream& operator<< ( ostream& os, const enfermedad & e){
 

@@ -6,6 +6,7 @@
 
 */
 mutacion::mutacion(){
+	enfermedad a;
 	setID("");
 	setChr("");
 	setPos(0);
@@ -28,7 +29,7 @@ mutacion::mutacion(const mutacion& m){
 }
 
 /** @brief Construimos una mutacion a travÃ©s de una cadena (@a str) de la base de datos. Se buscan distintos campos que      *          indiquen el atributo al que pertenece y se le asigna.
-   @param str Es un string de la base de datos
+*   @param str Es un string de la base de datos
 */
 mutacion::mutacion(const string & str){
 	unsigned int ini=0; 	//Desde donde empieza a buscar
@@ -53,6 +54,8 @@ mutacion::mutacion(const string & str){
 		this->ID=str.substr(ini,fin-ini);
 		ini=fin+1;
 	}
+	else
+		this->ID="S/N";
 	
 	//Leer REF_ALT
 	for(int j=0;j<2;j++) {
@@ -131,63 +134,54 @@ mutacion::mutacion(const string & str){
 
 
 /** @brief Asigna @a id al atributo del objeto llamado ID.
-
 */
 void mutacion::setID(const string & id){
 	this->ID = id;
 }
 
 /** @brief Asigna @a chr al atributo del objeto llamado Chr.
-
 */
 void mutacion::setChr(const string & chr){
 	this->chr = chr;
 }
 
 /** @brief Asigna @a pos al atributo del objeto llamado Pos.
-
 */
 void mutacion::setPos(const unsigned int & pos){
 	this->pos = pos;
 }
 
 /** @brief Asigna @a ref_alt al atributo del objeto llamado Ref_alt.
-
 */
 void mutacion::setRef_alt(const std::vector<string> & ref_alt){
 	this->ref_alt = ref_alt;
 }
 
 /** @brief Asigna @a genes al atributo del objeto llamado Genes.
-
 */
 void mutacion::setGenes (const std::vector<string> & genes){
 	this->genes = genes;
 }
 
 /** @brief Asigna @a common al atributo del objeto llamado Common.
-
 */
 void mutacion::setCommon (const bool & common){
 	this->common = common;
 }
 
 /** @brief Asigna @a caf al atributo del objeto llamado Caf.
-
 */
 void mutacion::setCaf (const std::vector<float> & caf){
 	this->caf = caf;
 }
 
 /** @brief Asigna @a enfermedades al atributo del objeto llamado Enfermedades.
-
 */
 void mutacion::setEnfermedades (const std::vector<enfermedad> & enfermedades){
 	this->enfermedades = enfermedades;
 }
 
 /** @brief Asigna @a clnsig al atributo del objeto llamado Clnsig.
-
 */
 void mutacion::setClnsig (const std::vector<int> & clnsig){
 	this->clnsig = clnsig;
@@ -195,64 +189,64 @@ void mutacion::setClnsig (const std::vector<int> & clnsig){
 
 
 
-/** @brief Deuelve el ID de la mutacion.
-	@return El atributo ID del objeto.
+/** @brief Devuelve el ID de la mutacion.
+*   @return El atributo ID del objeto.
 */
-string mutacion::getID( ) const{
+string mutacion::getID() const{
 	return ID;
 }
 
-/** @brief Deuelve el numero de cromosoma de la mutacion.
-	@return El atributo chr del objeto.
+/** @brief Devuelve el numero de cromosoma de la mutacion.
+*   @return El atributo chr del objeto.
 */
 string mutacion::getChr( ) const{
 	return chr;
 }
 
-/** @brief Deuelve la posicion de la mutacion dentro del cromosoma.
-	@return El atributo pos del objeto.
+/** @brief Devuelve la posicion de la mutacion dentro del cromosoma.
+*   @return El atributo pos del objeto.
 */
 unsigned int mutacion::getPos( ) const{
 	return pos;
 }
 
-/** @brief Deuelve las bases que aparecen en el genoma humano de referencia y las posibles mutaciones.
-	@return El atributo ref_alt del objeto.
+/** @brief Devuelve las bases que aparecen en el genoma humano de referencia y las posibles mutaciones.
+*   @return El atributo ref_alt del objeto.
 */
 const std::vector<string> & mutacion::getRef_alt () const{
 	return ref_alt;
 }
 
-/** @brief Deuelve el nombre e identificado del gen que contiene la mutacion.
-	@return El atributo genes del objeto.
+/** @brief Devuelve el nombre e identificado del gen que contiene la mutacion.
+*   @return El atributo genes del objeto.
 */
 const std::vector<string> & mutacion::getGenes () const{
 	return genes;
 }
 
-/** @brief Deuelve si la mutacion es común en la población.
-	@return El atributo common del objeto.
+/** @brief Devuelve si la mutacion es común en la población.
+*   @return El atributo common del objeto.
 */
 bool mutacion::getCommon () const{
 	return common;
 }
 
-/** @brief Deuelve la frecuencia con que se observa cada base descrita en la mutacion.
-	@return El atributo caf del objeto.
+/** @brief Devuelve la frecuencia con que se observa cada base descrita en la mutacion.
+*   @return El atributo caf del objeto.
 */
 const std::vector<float> & mutacion::getCaf () const{
 	return caf;
 }
 
-/** @brief Deuelve el nombre, ID y la base de datos de las enfermedades asociadas a la mutacion.
-	@return El atributo enfermedades del objeto.
+/** @brief Devuelve el nombre, ID y la base de datos de las enfermedades asociadas a la mutacion.
+*   @return El atributo enfermedades del objeto.
 */
 const std::vector<enfermedad> & mutacion::getEnfermedades () const{
 	return enfermedades;
 }
 
-/** @brief Deuelve la relevancia clínica de la mutacion.
-	@return El atributo clnsig del objeto.
+/** @brief Devuelve la relevancia clínica de la mutacion.
+*   @return El atributo clnsig del objeto.
 */
 const std::vector<int> & mutacion::getClnsig () const{
 	return clnsig;
@@ -260,9 +254,10 @@ const std::vector<int> & mutacion::getClnsig () const{
 
 
 
-/** @brief Sobrecarga del operador de asignación. Realiza la asignacion de una enfermedad a otra asignando parámetro por parámetro.
-	@param m Mutación que se desea asignar.
-   @return Devuelve una referencia al objeto.
+/** @brief Sobrecarga del operador de asignación. Realiza la asignacion de una enfermedad a otra 
+*	   asignando parámetro por parámetro.
+*   @param m Mutación que se desea asignar.
+*   @return Devuelve una referencia al objeto.
 */
 mutacion & mutacion::operator=(const mutacion & m){
 	if(this != &m){
@@ -281,23 +276,25 @@ mutacion & mutacion::operator=(const mutacion & m){
 }
 
 /** @brief Sobrecarga del operador de igualdad. ¿Es una mutación igual que la mutación @a m?.
-	@param m Mutación que se quiere comparar
-	@return Verdadero o Falso
+*   @param m Mutación que se quiere comparar
+*   @return Verdadero o Falso
 */
 bool mutacion::operator==(const mutacion & m) const{
-	return (getID() == m.getID());
+	return (getChr() == m.getChr()) && (getPos() == m.getPos());
 }
 
-/** @briefSobrecarga del operador menor estricto. ¿Es una mutación menor que la mutación @a m?
-	Se sigue el orden del número de cromosoma que ocupa y, si son iguales, se compara la posición
-	que ocupa dentro del cromosoma
-	@param m Mutación que se quiere comparar
-	@return Verdadero o Falso
+bool mutacion::operator!=(const mutacion & m) const{
+	return (getChr() != m.getChr()) || (getPos() != m.getPos());
+}
+
+/** @brief Sobrecarga del operador menor estricto. ¿Es una mutación menor que la mutación @a m?
+*	   Se sigue el orden del número de cromosoma que ocupa y, si son iguales, se compara la posición
+*	   que ocupa dentro del cromosoma
+*   @param m Mutación que se quiere comparar
+*   @return Verdadero o Falso
 */
 bool mutacion::operator<(const mutacion & m) const{
-	//El orden viene determinado por Chr y pos. El primer criterio es el número de cromosoma
-	//El orden para el nÃºmero de cromosoma se rige por "1"<"2"<"3"<...<"22"<"X"<"Y"<"MT"
-	//Dos mutaciones del mismo cromosoma deben ordenarse segÃºn su posiciÃ³n, de menor posiciÃ³n a mayor (orden natural de enteros). 
+
 	string s1 = getChr(), s2 = m.getChr();
 	
 	if (s1 == s2)
@@ -310,19 +307,25 @@ bool mutacion::operator<(const mutacion & m) const{
 		return (s1 < s2);
 } 
 
-bool mutacion::operator>(const mutacion & m) const{
-	return (!(*this < m) && !(*this == m));
-} 
+/** @brief Sobrecarga del operador mayor estricto. ¿Es una mutación mayor que la mutación @a m?
+*	   Se sigue el orden del número de cromosoma que ocupa y, si son iguales, se compara la posición
+*	   que ocupa dentro del cromosoma
+*   @param m Mutación que se quiere comparar
+*   @return Verdadero o Falso
+*/
+bool mutacion::operator>(const mutacion & m) const {
+	return !(*this<m) && !(*this==m);
+}
 
 
 /** @brief Sobrecarga del operador de extracción de flujo. Inserta en @a os todos los valores de los atributos de @a m.
-	@param os Flujo de salida
-	@param m Mutación de la que se desea extraer la información
-	@return Un flujo de salida con la informacion de la enfermedad.
+*   @param os Flujo de salida
+*   @param m Mutación de la que se desea extraer la información
+*   @return Un flujo de salida con la informacion de la mutacion.
 */
 ostream& operator<< ( ostream& os, const mutacion& m){
 	unsigned i;
-
+	
 	os << m.getChr() << "\t" << m.getPos() << "\t" << m.getID() << "\t";
 	
 	os << m.getRef_alt()[0] << "\t" << m.getRef_alt()[1] << "\t";
@@ -368,17 +371,19 @@ ostream& operator<< ( ostream& os, const mutacion& m){
 
 	os << "COMMON=" << m.getCommon() << ";\n";
 	
+	
 	return os;
 }
 
 
 /** @brief Devuelve la posición siguiente a @a busca dentro de @a texto buscando desde la posicion @a pos_ini
-	@param texto String donde se encuentra el string que queremos saltar
-	@param busca String a buscar
-	@param pos_ini Posición desde la que se desea empezar a buscar. Si no se dice nada empieza desde la posición 0
-	@return Posición siguiente a la posición del último caracter de @a busca. En caso de que no lo encuentre devuelve string::npos
+*   @param texto String donde se encuentra el string que queremos saltar
+*   @param busca String a buscar
+*   @param pos_ini Posición desde la que se desea empezar a buscar. Si no se dice nada empieza desde la posición 0
+*   @return Posición siguiente a la posición del último caracter de @a busca. En caso de que no lo encuentre devuelve
+*	    string::npos
 */
-int leer_despues(const string &texto, const string &busca, const int pos_ini){
+int mutacion::leer_despues(const string &texto, const string &busca, const int pos_ini){
 	unsigned int pos = texto.find(busca,pos_ini);
 	if (pos != string::npos)
 		pos += busca.size();
@@ -387,14 +392,14 @@ int leer_despues(const string &texto, const string &busca, const int pos_ini){
 }
 
 /** @brief Escribe en @a cad la subcadena de @a texto desde @a pos hasta un caracter @a ignorar o hasta @a terminar
-	@param texto String de donde queremos extraer la subcadena
-	@param cad String donde desea que se escriba la subcadena
-	@param pos_ini Posicion donde comienza la subcadena
-	@param ignorar Caracter hasta donde se desea leer
-	@param terminar Caracter con el que termina la subcadena si no encuentra @a ignorar
-	@return La posición siguiente al fin de la subcadena
+*   @param texto String de donde queremos extraer la subcadena
+*   @param cad String donde desea que se escriba la subcadena
+*   @param pos_ini Posicion donde comienza la subcadena
+*   @param ignorar Caracter hasta donde se desea leer
+*   @param terminar Caracter con el que termina la subcadena si no encuentra @a ignorar
+*   @return La posición siguiente al fin de la subcadena
 */
-int leer_sin_separadores(const string &texto, string &cad, const int pos_ini, const char &ignorar, const char &terminar){
+int mutacion::leer_sin_separadores(const string &texto, string &cad, const int pos_ini, const char &ignorar, const char &terminar){
 	cad="";
 	int i=pos_ini;
 	while(texto[i]!=ignorar && texto[i]!=terminar){
@@ -404,3 +409,4 @@ int leer_sin_separadores(const string &texto, string &cad, const int pos_ini, co
 	i++;
 	return i;
 }
+

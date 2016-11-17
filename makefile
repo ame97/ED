@@ -1,18 +1,21 @@
-prueba: prueba.o
-	g++ -o prueba prueba.o
-	
-principal: principal.o
-	g++ -o principal principal.o
-	
-	
+SRC = ./SRC
+OBJ = ./OBJ
+INC = ./INC
+BIN = ./BIN
+DOC = ./DOC
 
-prueba.o: prueba.cpp
-	g++ -I./ -std=c++0x -c prueba.cpp -o prueba.o -g -Wall
-	
-principal.o: principal.cpp
-	g++ -I./ -std=c++0x -c principal.cpp -o principal.o
+all: $(BIN)/Principal
 
+$(BIN)/Principal: $(OBJ)/principal.o
+	g++ -o $(BIN)/Principal $(OBJ)/principal.o
 
-	
+$(OBJ)/principal.o: $(SRC)/principal.cpp
+	g++ -I$(INC) -std=c++11 -c $(SRC)/principal.cpp -o $(OBJ)/principal.o
+
 mrproper:
-	rm ./prueba ./principal ./*.o
+	rm -f $(BIN)/* $(OBJ)/*.o   
+	rm -Rf $(DOC)/HTML $(DOC)/LaTeX
+doxy:
+	doxygen $(DOC)/doxPractica.txt
+	mv html $(DOC)/HTML
+	mv latex $(DOC)/LaTeX
