@@ -1,4 +1,3 @@
-using namespace std;
 /** \invariant
 		 
 IR: rep ==> bool
@@ -35,7 +34,7 @@ bool conjunto<T,CMP>::cheq_rep( ) const {
 			cond2=(cond21 && vm[count].getPos()>0);
 
 			if(cond2)
-				cond3=vm[count]<vm[count+1];
+				cond3=CMP(vm[count],vm[count+1]);
 		}
 
 	return (cond1 && cond2 && cond3);
@@ -74,7 +73,7 @@ typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::find (const typename conjun
 		med=(inf+sup)/2;
 		if(vm[med]==s)
 			encontrado=true;
-		else if(CMP(vm[med],s)
+		else if(CMP(vm[med],s))
 			inf=med;
 		else
 			sup=med;
@@ -98,7 +97,7 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::find(const typename co
 		med=(inf+sup)/2;
 		if(vm[med]==s)
 			encontrado=true;
-		else if(CMP(vm[med],s)
+		else if(CMP(vm[med],s))
 			inf=med;
 		else
 			sup=med;
@@ -121,7 +120,7 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::find(const typename co
 
 template <typename T, typename CMP>	
 typename conjunto<T,CMP>::size_type conjunto<T,CMP>::count (const typename conjunto<T,CMP>::value_type & e) const{
-	return (find(e)!=cend())?1:0;
+	return count(cbegin(),cend(),e);
 }
 
 /** @brief Inserta una entrada en el conjunto
@@ -133,7 +132,33 @@ typename conjunto<T,CMP>::size_type conjunto<T,CMP>::count (const typename conju
 */
 
 template <typename T, typename CMP>
-pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typename conjunto<T,CMP>::value_type& val){} //cambiar	
+pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typename conjunto<T,CMP>::value_type& val){
+	typename conjunto<T,CMP>::iterator it;
+	int inf=0,med,sup=size();
+	bool insertado=false;
+	bool encontrado=false;
+
+	while(inf<sup && !insertado && !encontrado) {
+		med=(sup+inf)/2;
+		if(vm[med]==val)
+			encontrado=true;
+		else if(CMP(vm[med],val) && CMP(val,vm[med])) {
+			it=begin()+med;
+			vm.insert(it,val);
+			insertado=true;
+		}
+		else if(CMP(vm[med],val))
+			inf=med;
+		else
+			sup=med;
+	}
+
+	if(encontrado)
+		it=end();
+
+	return pair<typename conjunto<T,CMP>::iterator,bool>(it,insertado);
+
+} //cambiar	
 	
 /** @brief Borra una entrada en el conjunto .
 *	   Busca la entrada con chr/pos o id en el conjunto (utiliza e.getID()
@@ -159,13 +184,8 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typ
 
 template <typename T, typename CMP>	
 typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::erase (const typename conjunto<T,CMP>::iterator position) {
-	typename conjunto<T,CMP>::iterator it=find(e);
+	typename conjunto<T,CMP>::iterator it=vm.erase(position);
 
-	if(it!=end()) {
-		it=vm.erase(it);
-
-	}
-	
 	return (it-cbegin());
 }
 
@@ -198,7 +218,7 @@ void conjunto<T,CMP>::clear() {
 */
 
 template <typename T, typename CMP>
-typename conjunto::size_type conjunto<T,CMP>::size() const {
+typename conjunto<T,CMP>::size_type conjunto<T,CMP>::size() const {
 	return vm.size();
 }
 
@@ -218,7 +238,7 @@ bool conjunto<T,CMP>::empty() const {
 *   @return Crea y devuelve un conjunto duplicado exacto de org.
 */
 template <typename T, typename CMP>
-conjunto & conjunto<T,CMP>::operator=( const conjunto<T,CMP> & org) {
+conjunto<T,CMP> & conjunto<T,CMP>::operator=( const conjunto<T,CMP> & org) {
 	if(this!=&org)
 		vm=org.vm;
 	
@@ -297,7 +317,7 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::lower_bound (const con
 */
 
 template <typename T, typename CMP>
-typename conjunto<T,CMP>::iterator conjunto<T,CMP>::upper_bound (const conjunto<T,CMP>::value_type & e) const{
+typename conjunto<T,CMP>::iterator conjunto<T,CMP>::upper_bound (const conjunto<T,CMP>::value_type & e) {
 	typename conjunto<T,CMP>::iterator beg=begin();
 	typename conjunto<T,CMP>::iterator end=end();
 	typename conjunto<T,CMP>::iterator it=std::upper_bound(beg,end,e);

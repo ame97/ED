@@ -3,9 +3,10 @@
 
 template<class T>
 class crecienteCP {
-	bool operator()(const T &e) {
-		return (*this<e);
-	}
+	public:
+		bool operator()(const T & e1,const T &e2) {
+			return (e1<e2);
+		}
 };
 
 #endif

@@ -8,7 +8,9 @@
 #define __CONJUNTO_H
 #include <string>
 #include <vector>
-#include <iostream> 
+#include <iostream>
+#include <criterios.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -30,7 +32,7 @@ using namespace std;
  */
 
 
-template <typename T, typename CMP>
+template <class T, typename CMP>
 class conjunto {  
 public:
 	typedef T value_type;
@@ -169,9 +171,7 @@ const_iterator upper_bound (const value_type& val) const;
 	   
 	 
 private:
-	vector<value_type> vm; // vector que almacena los elementos del conjunto
-	CMP comp; // criterio para guiar la ordenacion
-	
+	vector<value_type> vm; // vector que almacena los elementos del conjunto	
 
 		
 	/** @brief Chequea el Invariante de la representacion 
@@ -193,5 +193,6 @@ template <typename T, typename CMP>
 ostream &  operator << ( ostream & sal, const conjunto<T,CMP> & C);
 
 	
+#include "conjunto.hxx"
 
 #endif
