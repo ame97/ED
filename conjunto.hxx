@@ -137,7 +137,7 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typ
 	typename conjunto<T,CMP>::iterator it;
 	bool insertado=false;
 
-	if(size()<0) {
+	if(size()>0) {
 		typename conjunto<T,CMP>::iterator inicio=begin();
 		typename conjunto<T,CMP>::iterator fin=end();
 
@@ -146,7 +146,7 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typ
 		while(inicio!=fin && !encontrado && !insertado) {
 			if(*inicio==val)
 				encontrado=true;
-			else if(comp(*inicio,val)) {
+			else if(!comp(*inicio,val)) {
 				it=vm.insert(inicio,val);
 				insertado=true;
 			}else
