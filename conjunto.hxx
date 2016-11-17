@@ -301,17 +301,13 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cend () const {
 */
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::lower_bound (const conjunto<T,CMP>::value_type & e){
-	typename conjunto<T,CMP>::iterator beg=begin();
-	typename conjunto<T,CMP>::iterator fin=end();
-	typename conjunto<T,CMP>::iterator it=std::lower_bound(beg,fin,e);
+	typename conjunto<T,CMP>::iterator it=find(e);
 	return it;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::lower_bound (const conjunto<T,CMP>::value_type & e) const{
-	typename conjunto<T,CMP>::const_iterator beg=cbegin();
-	typename conjunto<T,CMP>::const_iterator fin=cend();
-	typename conjunto<T,CMP>::const_iterator it=std::lower_bound(beg,fin,e);
+	typename conjunto<T,CMP>::const_iterator it=find(e);
 	return it;
 }
 
@@ -326,18 +322,14 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::lower_bound (const con
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::upper_bound (const conjunto<T,CMP>::value_type & e) {
-	typename conjunto<T,CMP>::iterator beg=begin();
-	typename conjunto<T,CMP>::iterator fin=end();
-	typename conjunto<T,CMP>::iterator it=std::upper_bound(beg,fin,e);
-	return it;
+	typename conjunto<T,CMP>::iterator it=find(e);
+	return ++it;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::upper_bound (const conjunto<T,CMP>::value_type & e) const{
-	typename conjunto<T,CMP>::const_iterator beg=cbegin();
-	typename conjunto<T,CMP>::const_iterator fin=cend();
-	typename conjunto<T,CMP>::const_iterator it=std::upper_bound(beg,fin,e);
-	return it;
+	typename conjunto<T,CMP>::const_iterator it=find(e);
+	return ++it;
 }
 
 
