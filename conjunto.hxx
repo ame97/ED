@@ -134,35 +134,49 @@ typename conjunto<T,CMP>::size_type conjunto<T,CMP>::count (const typename conju
 
 template <typename T, typename CMP>
 pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typename conjunto<T,CMP>::value_type& val){
-	typename conjunto<T,CMP>::iterator it;
+	typename conjunto<T,CMP>::iterator it=end();
 	bool insertado=false;
 
+	int inf=0,med,sup=size();
+
+	bool encontrado=false;
+	
 	if(size()>0) {
-		typename conjunto<T,CMP>::iterator inicio=begin();
-		typename conjunto<T,CMP>::iterator fin=end();
-
-	 	bool encontrado=false;
-
-		while(inicio!=fin && !encontrado && !insertado) {
-			if(*inicio==val)
+		while(inf<sup && !insertado && !encontrado) {
+			med=(sup+inf)/2;
+			cerr << "Entro";		
+			if(vm[med]==val) {
+				cerr << "Encontrado";
 				encontrado=true;
-			else if(!comp(*inicio,val)) {
-				it=vm.insert(inicio,val);
+			}else if(med+1<size()) {
+				if(comp(vm[med],val) && comp(val,vm[med+1])) {
+					cerr << "Insertado";
+					vm.insert(cbegin()+med+1,val);
+					insertado=true;
+					it=begin()+med;
+				}
+			} else if(size()==1  && comp(vm[med],val)) {
+				vm.insert(cbegin()+med+1,val);
 				insertado=true;
-			}else
-				++inicio;
+				it=begin()+med;
+			}else if(comp(vm[med],val)) {
+				cerr << "1";
+				inf=med;
+			}else{
+				cerr << "2";
+				sup=med;
+			}
+			cerr << "Salgo";
 		}
-
-		if(encontrado==true)
-			it=end();
-
 	}
 
-	else {
+
+ 	if(!insertado && !encontrado) {
 		vm.push_back(val);
+		it=end()-1;
 		insertado=true;
-		it=begin();
 	}
+
 
 	return pair<typename conjunto<T,CMP>::iterator,bool>(it,insertado);
 
