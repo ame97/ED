@@ -32,10 +32,11 @@ using namespace std;
  */
 
 
-template <class T, typename CMP>
+template <class T, class CMP>
 class conjunto {  
 public:
 	typedef T value_type;
+	typedef CMP compare_type;
 	typedef unsigned int size_type;
 	typedef typename vector<value_type>::iterator iterator;
 	typedef typename vector<value_type>::const_iterator const_iterator;
@@ -154,7 +155,7 @@ pair<iterator,bool> insert (const value_type& val);
 	@post no modifica el conjunto.
 	*/
 	iterator lower_bound (const value_type& val);
-const_iterator lower_bound (const value_type& val) const;
+	const_iterator lower_bound (const value_type& val) const;
 
 
 	/** @brief busca primer elemento por encima ('después', '>') de los parámetros dados. 
@@ -173,7 +174,7 @@ const_iterator upper_bound (const value_type& val) const;
 private:
 	vector<value_type> vm; // vector que almacena los elementos del conjunto	
 
-		
+	compare_type comp;
 	/** @brief Chequea el Invariante de la representacion 
 	    @return true si el invariante es correcto, falso en caso contrario
 	*/

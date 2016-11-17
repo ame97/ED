@@ -34,7 +34,7 @@ bool conjunto<T,CMP>::cheq_rep( ) const {
 			cond2=(cond21 && vm[count].getPos()>0);
 
 			if(cond2)
-				cond3=CMP(vm[count],vm[count+1]);
+				cond3=comp(vm[count],vm[count+1]);
 		}
 
 	return (cond1 && cond2 && cond3);
@@ -73,7 +73,7 @@ typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::find (const typename conjun
 		med=(inf+sup)/2;
 		if(vm[med]==s)
 			encontrado=true;
-		else if(CMP(vm[med],s))
+		else if(comp(vm[med],s))
 			inf=med;
 		else
 			sup=med;
@@ -97,7 +97,7 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::find(const typename co
 		med=(inf+sup)/2;
 		if(vm[med]==s)
 			encontrado=true;
-		else if(CMP(vm[med],s))
+		else if(comp(vm[med],s))
 			inf=med;
 		else
 			sup=med;
@@ -134,27 +134,34 @@ typename conjunto<T,CMP>::size_type conjunto<T,CMP>::count (const typename conju
 template <typename T, typename CMP>
 pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typename conjunto<T,CMP>::value_type& val){
 	typename conjunto<T,CMP>::iterator it;
-	int inf=0,med,sup=size();
 	bool insertado=false;
-	bool encontrado=false;
 
-	while(inf<sup && !insertado && !encontrado) {
-		med=(sup+inf)/2;
-		if(vm[med]==val)
-			encontrado=true;
-		else if(CMP(vm[med],val) && CMP(val,vm[med])) {
-			it=begin()+med;
-			vm.insert(it,val);
-			insertado=true;
+	if(size()<0) {
+		typename conjunto<T,CMP>::iterator inicio=begin();
+		typename conjunto<T,CMP>::iterator fin=end();
+
+	 	bool encontrado=false;
+
+		while(inicio!=fin && !encontrado && !insertado) {
+			if(*inicio==val)
+				encontrado=true;
+			else if(comp(*inicio,val)) {
+				it=vm.insert(inicio,val);
+				insertado=true;
+			}else
+				++inicio;
 		}
-		else if(CMP(vm[med],val))
-			inf=med;
-		else
-			sup=med;
+
+		if(encontrado==true)
+			it=end();
+
 	}
 
-	if(encontrado)
-		it=end();
+	else {
+		vm.push_back(val);
+		insertado=true;
+		it=begin();
+	}
 
 	return pair<typename conjunto<T,CMP>::iterator,bool>(it,insertado);
 
