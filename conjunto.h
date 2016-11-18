@@ -6,6 +6,7 @@
 
 #ifndef __CONJUNTO_H
 #define __CONJUNTO_H
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -78,10 +79,10 @@ public:
 	/** @brief Inserta una entrada en el conjunto
 	@param val entrada a insertar
 	@return un par donde el segundo campo vale true si la entrada se ha podido insertar con éxito, esto es, no existe una mutación con igual valor en el conjunto. False en caso contrario. 
-    El primer campo del par devuelve un iterador al elemento insertado, o end() si no fue posible la insercion
-   @post Si e no esta en el conjunto, el size() sera incrementado en 1.
+	El primer campo del par devuelve un iterador al elemento insertado, o end() si no fue posible la insercion
+   	@post Si e no esta en el conjunto, el size() sera incrementado en 1.
 	*/
-pair<iterator,bool> insert (const value_type& val);	
+	pair<iterator,bool> insert (const value_type& val);	
 	
 	/** @brief Borra una entrada en el conjunto .
 	Busca la entrada y si la encuentra la borra.
@@ -167,22 +168,17 @@ pair<iterator,bool> insert (const value_type& val);
 	@post no modifica el conjunto.
 	*/
       iterator upper_bound (const value_type& val);
-const_iterator upper_bound (const value_type& val) const;
+	const_iterator upper_bound (const value_type& val) const;
 
 	   
 	 
 private:
 	vector<value_type> vm; // vector que almacena los elementos del conjunto	
-
 	compare_type comp;
 	/** @brief Chequea el Invariante de la representacion 
 	    @return true si el invariante es correcto, falso en caso contrario
 	*/
 	bool cheq_rep( ) const;
-	  
-  
- 
-
 };
 
 
@@ -193,7 +189,6 @@ Implementar tambien esta funcion
 template <typename T, typename CMP>
 ostream &  operator << ( ostream & sal, const conjunto<T,CMP> & C);
 
-	
 #include "conjunto.hxx"
 
 #endif
