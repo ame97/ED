@@ -136,11 +136,12 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typ
 	bool insertado = false;
 	typename conjunto<T,CMP>::iterator it = lower_bound(val);
 	
-	if (it != end())
+	if (it != end()){
 		if (*it != val){
 			vm.insert(it,val);
 			insertado = true;
 		}
+	}
 	else{
 		vm.push_back(val);
 		insertado = true;
