@@ -36,10 +36,20 @@ using namespace std;
 template <class T, class CMP>
 class conjunto {  
 public:
+
+	/** @brief value_type es el tipo con el que se trabaja en conjunto*/
 	typedef T value_type;
+
+	/** @brief compare_type es el criterio de comparacion que utiliza el cojunto*/
 	typedef CMP compare_type;
+
+	/** @brief size_type es el tipo utilizado para medir el tamaño del cojunto*/
 	typedef unsigned int size_type;
+
+	/** @brief iterator es el tipo utilizado para el iterador del cojunto*/
 	typedef typename vector<value_type>::iterator iterator;
+
+	/** @brief iterator es el tipo utilizado para el iterador constante del cojunto*/
 	typedef typename vector<value_type>::const_iterator const_iterator;
 
 
