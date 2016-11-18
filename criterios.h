@@ -24,7 +24,6 @@ class crecienteID {
 		}
 };
 
-template<class T>
 class decrecienteID {
 	public:
 		bool operator()(const mutacion & e1,const mutacion &e2) {
@@ -51,7 +50,6 @@ class crecienteEnfermedad {
 		}
 };
 
-template<class T>
 class decrecienteEnfermedad {
 	public:
 		bool operator()(const mutacion & e1,const mutacion &e2) {
