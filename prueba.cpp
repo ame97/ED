@@ -1,6 +1,7 @@
 #include "mutacion.h"
 #include "enfermedad.h"
 #include "conjunto.h"
+#include "criterios.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -9,7 +10,7 @@
 using namespace std;
 using namespace std::chrono;
 
-bool load(conjunto &  cm, const string & s) {
+bool load(conjunto<mutacion,crecienteCP<mutacion>> &cm, const string &s) {
 	ifstream fe;
 	string cadena;
 	
@@ -42,17 +43,17 @@ bool load(conjunto &  cm, const string & s) {
    
  
 int main(){
-   conjunto conjuntoMutaciones;
-   string query_str;  
+	conjunto<mutacion,crecienteCP<mutacion>> conjuntoMutaciones;
+	string query_str;  
 	high_resolution_clock::time_point tantes,tdespues;
 	duration<double> tiempo_transcurrido;
     
 	tantes = high_resolution_clock::now();
-   load(conjuntoMutaciones, "clinvar_20160831_2.vcf");
+	load(conjuntoMutaciones, "clinvar_20160831.vcf");
 	tdespues = high_resolution_clock::now();
 	
 	tiempo_transcurrido  = duration_cast<duration<double> >(tdespues - tantes);
 	cout << "Tiempo = " << tiempo_transcurrido.count() << endl;
    
-   cout << conjuntoMutaciones.size() << endl;
+	cout << conjuntoMutaciones.size() << endl;
 }
