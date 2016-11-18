@@ -1,9 +1,9 @@
 CPP = g++ -std=c++0x
-INC = ./
-BIN = ./
-SRC = ./
-OBJ = ./
-DOC = ./
+INC = .
+BIN = .
+SRC = .
+OBJ = .
+DOC = .
 
 all: $(BIN)/principal $(BIN)/prueba
 
