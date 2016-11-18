@@ -53,8 +53,8 @@ conjunto<T,CMP>::conjunto() {
 *   @param[in] d conjunto a copiar
 */
 template <typename T, typename CMP>
-conjunto<T,CMP>::conjunto (const conjunto<T,CMP> & d) { //Cambia
-	vm=d.vm;
+conjunto<T,CMP>::conjunto (const conjunto<T,CMP> & d) {
+	vm = d.vm;
 }
 
 /** @brief busca una entrada en el conjunto
@@ -65,51 +65,50 @@ conjunto<T,CMP>::conjunto (const conjunto<T,CMP> & d) { //Cambia
 */
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::find (const typename conjunto<T,CMP>::value_type & s) {
-	typename conjunto<T,CMP>::iterator buscado=begin();
-	bool encontrado=false;
-	unsigned int inf=0,med,sup=size();
+	typename conjunto<T,CMP>::iterator it = begin();
+	unsigned int ini = 0, fin = size(), med;
+	bool esta = false;
 
-	while(inf<sup && !encontrado) {
-		med=(inf+sup)/2;
+	while(ini < fin && !esta) {
+		med = (ini + fin)/2;
 		if(vm[med]==s)
-			encontrado=true;
+			esta = true;
 		else if(comp(vm[med],s))
-			inf=med;
+			ini = med;
 		else
-			sup=med;
+			fin = med;
 	}
 
-	if(encontrado)
-		buscado=buscado+med;
+	if(esta)
+		it += med;
 	else
-		buscado=end();
+		it = end();
 
-	return buscado;
+	return it;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::find(const typename conjunto<T,CMP>::value_type & s) const {
-	typename conjunto<T,CMP>::const_iterator buscado=cbegin();
-	bool encontrado=false;
-	unsigned int inf=0,med,sup=size();
+	typename conjunto<T,CMP>::const_iterator it = cbegin();
+	unsigned int ini = 0, fin = size(), med;
+	bool esta = false;
 
-	while(inf<sup && !encontrado) {
-		med=(inf+sup)/2;
+	while(ini < fin && !esta) {
+		med = (ini + fin)/2;
 		if(vm[med]==s)
-			encontrado=true;
+			esta = true;
 		else if(comp(vm[med],s))
-			sup=med;
+			ini = med;
 		else
-			inf=med;
+			fin = med;
 	}
 
-	if(encontrado)
-		buscado=buscado+med;
-	
+	if(esta)
+		it += med;
 	else
-		buscado=cend();
+		it = cend();
 
-	return buscado;
+	return it;
 }
 
 /** @brief cuenta cuantas entradas coinciden con los parámetros dados. 
@@ -137,12 +136,11 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typ
 	bool insertado = false;
 	typename conjunto<T,CMP>::iterator it = lower_bound(val);
 	
-	if (it != end()){
+	if (it != end())
 		if (*it != val){
-		vm.insert(it,val);
-		insertado = true;
+			vm.insert(it,val);
+			insertado = true;
 		}
-	}
 	else{
 		vm.push_back(val);
 		insertado = true;
@@ -176,21 +174,17 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typ
 
 template <typename T, typename CMP>	
 typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::erase (const typename conjunto<T,CMP>::iterator position) {
-	typename conjunto<T,CMP>::iterator it=vm.erase(position);
-
-	return it;
+	return vm.erase(position);
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::size_type conjunto<T,CMP>::erase(const typename conjunto<T,CMP>::value_type & e) {
-	typename conjunto<T,CMP>::const_iterator it=find(e);
+	typename conjunto<T,CMP>::const_iterator it = find(e);
 
-	if(it!=cend()) {
-		it=vm.erase(it);
-
-	}
+	if(it != cend())
+		it = vm.erase(it);
 	
-	return (it-cbegin());
+	return (it - cbegin());
 }
 		
 		 
@@ -231,10 +225,10 @@ bool conjunto<T,CMP>::empty() const {
 */
 template <typename T, typename CMP>
 conjunto<T,CMP> & conjunto<T,CMP>::operator=( const conjunto<T,CMP> & org) {
-	if(this!=&org)
-		vm=org.vm;
+	if(this != &org)
+		vm = org.vm;
 	
-	return *this;
+	return (*this);
 }
 
 
@@ -318,15 +312,13 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::upper_bound (const con
 */
 
 template <typename T, typename CMP>
-ostream &  operator << ( ostream & sal, const conjunto<T,CMP> & C) {
-	typename conjunto<T,CMP>::const_iterator beg=C.cbegin();
-	typename conjunto<T,CMP>::const_iterator end=C.cend();
+ostream &  operator << ( ostream & os, const conjunto<T,CMP> & C) {
+	typename conjunto<T,CMP>::const_iterator ini = C.cbegin();
+	typename conjunto<T,CMP>::const_iterator fin = C.cend();
 
-	while(beg!=end) {
-		sal << *beg;
-		beg++;
-	}
+	while(ini != fin)
+		os << *(ini++);
 
-	return sal;
+	return os;
 }
 
