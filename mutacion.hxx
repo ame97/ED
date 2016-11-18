@@ -6,7 +6,6 @@
 
 */
 mutacion::mutacion(){
-	enfermedad a;
 	setID("");
 	setChr("");
 	setPos(0);
@@ -400,13 +399,12 @@ int mutacion::leer_despues(const string &texto, const string &busca, const int p
 *   @return La posición siguiente al fin de la subcadena
 */
 int mutacion::leer_sin_separadores(const string &texto, string &cad, const int pos_ini, const char &ignorar, const char &terminar){
-	cad="";
-	int i=pos_ini;
-	while(texto[i]!=ignorar && texto[i]!=terminar){
-		cad+=texto[i];
-		i++;
-	}
-	i++;
-	return i;
+	int i = pos_ini;
+	cad = "";
+	
+	while(texto[i] != ignorar && texto[i] != terminar)
+		cad += texto[i++];
+	
+	return i+1;
 }
 
