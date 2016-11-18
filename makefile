@@ -1,17 +1,39 @@
-principal: principal.o
-	g++ -o principal.exe principal.o
+CPP = g++ -std=c++0x
+INC = ./
+BIN = ./
+SRC = ./
+OBJ = ./
+DOC = ./
 
-prueba: prueba.o
-	g++ -o prueba.exe prueba.o
-	
+all: $(BIN)/principal $(BIN)/prueba
 
-prueba.o: prueba.cpp
-	g++ -I./ -std=c++0x -c prueba.cpp -o prueba.o
-	
-principal.o: principal.cpp
-	g++ -I./ -std=c++0x -c principal.cpp -o principal.o
+# ----------------------------------------------- #
 
+$(BIN)/principal: $(OBJ)/principal.o
+	$(CPP) $(OBJ)/principal.o -o $(BIN)/principal.exe
+
+$(BIN)/prueba: $(OBJ)/prueba.o
+	$(CPP) $(OBJ)/prueba.o -o $(BIN)/prueba.exe
+
+# ----------------------------------------------- #
+
+$(OBJ)/prueba.o: $(SRC)/prueba.cpp
+	$(CPP) -I$(INC) -c $(SRC)/prueba.cpp -o $(OBJ)/prueba.o
 	
-	
-mrproper:
-	rm ./*.exe ./*.o
+$(OBJ)/principal.o: $(SRC)/principal.cpp
+	$(CPP) -I$(INC) -c $(SRC)/principal.cpp -o $(OBJ)/principal.o
+
+# ----------------------------------------------- #
+
+doxy:
+	doxygen $(DOC)/docPractica.txt
+	mv html $(DOC)/HTML
+	mv latex $(DOC)/LaTeX
+
+# ----------------------------------------------- #
+
+clean:
+	rm $(OBJ)/*.o
+	rm $(BIN)/*.exe
+	rm $(DOC)/HTML
+	rm $(DOC)/LaTeX
