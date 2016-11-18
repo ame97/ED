@@ -137,7 +137,6 @@ bool enfermedad::nameContains(const string & str) const{
 *	     de la enfermedad.
 */
  ostream& operator<< ( ostream& os, const enfermedad & e){
-
 	os << e.toString();
 	
 	return os;
