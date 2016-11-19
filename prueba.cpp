@@ -10,7 +10,46 @@
 using namespace std;
 using namespace std::chrono;
 
-bool load(conjunto<mutacion,crecienteCP<mutacion>> &cm, const string &s) {
+
+/* ----------------------------------------- * /
+
+	conjunto<mutacion,creciente<mutacion>>    conjuntoMutaciones;
+	string criterio = "Creciente Chr - Pos";
+	bool load(conjunto<mutacion,creciente<mutacion>> &cm, const string &s)
+	
+/* ----------------------------------------- * /
+
+	conjunto<mutacion,decreciente<mutacion>>  conjuntoMutaciones;
+	string criterio = "Decreciente Chr - Pos";
+	bool load(conjunto<mutacion,decreciente<mutacion>> &cm, const string &s)
+	
+/* ----------------------------------------- */
+
+	conjunto<mutacion,crecienteID>            conjuntoMutaciones;
+	string criterio = "Creciente ID";
+	bool load(conjunto<mutacion,crecienteID> &cm, const string &s)
+	
+/* ----------------------------------------- * /
+
+	conjunto<mutacion,decrecienteID>          conjuntoMutaciones;
+	string criterio = "Decreciente ID";
+	bool load(conjunto<mutacion,decrecienteID> &cm, const string &s)
+	
+/* ----------------------------------------- * /
+
+	conjunto<mutacion,crecienteEnfermedad>    conjuntoMutaciones;
+	string criterio = "Creciente Enfermedades";
+	bool load(conjunto<mutacion,crecienteEnfermedad> &cm, const string &s)
+	
+/* ----------------------------------------- * /
+
+	conjunto<mutacion,decrecienteEnfermedad>  conjuntoMutaciones;
+	string criterio = "Decreciente Enfermedades";
+	bool load(conjunto<mutacion,decrecienteEnfermedad> &cm, const string &s)
+	
+/* ----------------------------------------- */
+
+{
 	ifstream fe;
 	string cadena;
 	
@@ -39,21 +78,19 @@ bool load(conjunto<mutacion,crecienteCP<mutacion>> &cm, const string &s) {
 	} // else
 	fe.close();
 	return false;
- }
-   
- 
+}
+
 int main(){
-	conjunto<mutacion,crecienteCP<mutacion>> conjuntoMutaciones;
-	string query_str;  
 	high_resolution_clock::time_point tantes,tdespues;
 	duration<double> tiempo_transcurrido;
-    
+	
 	tantes = high_resolution_clock::now();
 	load(conjuntoMutaciones, "clinvar_20160831.vcf");
 	tdespues = high_resolution_clock::now();
 	
 	tiempo_transcurrido  = duration_cast<duration<double> >(tdespues - tantes);
-	cout << "Tiempo = " << tiempo_transcurrido.count() << endl;
-   
-	cout << conjuntoMutaciones.size() << endl;
+	
+	cout << criterio << ":" << endl;
+	cout << "\tTiempo               =  " << tiempo_transcurrido.count() << endl;
+	cout << "\tMutaciones cargadas  =  " << conjuntoMutaciones.size() << endl;
 }
