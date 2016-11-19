@@ -13,7 +13,7 @@ template<class T>
 class decreciente {
 	public:
 		bool operator()(const T & e1,const T &e2) {
-			return (e1>e2);
+			return (e2<e1);
 		}
 };
 

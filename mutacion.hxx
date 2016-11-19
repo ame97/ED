@@ -279,7 +279,7 @@ mutacion & mutacion::operator=(const mutacion & m){
 *   @return Verdadero o Falso
 */
 bool mutacion::operator==(const mutacion & m) const{
-	return (getChr() == m.getChr()) && (getPos() == m.getPos());
+	return (getID() == m.getID());
 }
 
 bool mutacion::operator!=(const mutacion & m) const{
