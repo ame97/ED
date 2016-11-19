@@ -37,13 +37,13 @@ class crecienteEnfermedad {
 			enfermedad min1=e1.getEnfermedades()[0];
 			enfermedad min2=e2.getEnfermedades()[0];
 			for(int i=1;i<e1.getEnfermedades().size();++i) {
-				if(min1>e1.getEnfermedades()[i])
-					min1=e1.getEnfermedades()[i]
+				if(e1.getEnfermedades()[i]<min1)
+					min1=e1.getEnfermedades()[i];
 			}
 	
 			for(int i=1;i<e2.getEnfermedades().size();++i) {
-				if(min2>e2.getEnfermedades()[i])
-					min2=e2.getEnfermedades()[i]
+				if(e2.getEnfermedades()[i]<min2)
+					min2=e2.getEnfermedades()[i];
 			}
 
 			return (min1<min2);
@@ -56,16 +56,16 @@ class decrecienteEnfermedad {
 			enfermedad max1=e1.getEnfermedades()[0];
 			enfermedad max2=e2.getEnfermedades()[0];
 			for(int i=1;i<e1.getEnfermedades().size();++i) {
-				if(max<e1.getEnfermedades()[i])
-					max1=e1.getEnfermedades()[i]
+				if(max1<e1.getEnfermedades()[i])
+					max1=e1.getEnfermedades()[i];
 			}
 	
 			for(int i=1;i<e2.getEnfermedades().size();++i) {
 				if(max2<e2.getEnfermedades()[i])
-					max2=e2.getEnfermedades()[i]
+					max2=e2.getEnfermedades()[i];
 			}
 
-			return (max1>max2);
+			return (max2<max1);
 		}
 };
 

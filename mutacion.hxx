@@ -296,14 +296,26 @@ bool mutacion::operator<(const mutacion & m) const{
 
 	string s1 = getChr(), s2 = m.getChr();
 	
-	if (s1 == s2)
-		return (getPos() < m.getPos());
-	else if (s1 == "MT")
+	if (s1 == s2) {
+		if(getPos() == m.getPos())
+			return (getID() != m.getID());
+		else
+			return (getPos() < m.getPos());
+	}else if (s1 == "MT")
 		return false;
 	else if (s2 == "MT")
 		return true;
-	else
-		return (s1 < s2);
+	else if (s1=="X" && s2=="Y")
+		return true;
+	else if (s1=="Y" && s2=="X")
+		return false;
+	else if(isalpha(s1[0]) && isdigit(s2[0]))
+		return false;
+	else if(isalpha(s2[0]) && isdigit(s1[0]))
+		return true;
+	else if(stoi(s1)<stoi(s2))
+		return(stoi(s1)<stoi(s2));
+		
 } 
 
 /** @brief Sobrecarga del operador mayor estricto. ¿Es una mutación mayor que la mutación @a m?
