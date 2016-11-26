@@ -1,31 +1,24 @@
-/* 
- * conjunto.h
- * 
- * Copyright  (C) Juan F. Huete y Carlos Cano 
-*/
-
-#ifndef __CONJUNTO_H
-#define __CONJUNTO_H
-
+#ifndef __CONJUNTOIT_H
+#define __CONJUNTOIT_H
 #include <string>
 #include <vector>
 #include <iostream>
-#include <criterios.h>
 #include <algorithm>
+
+#include <assert.h>
 
 using namespace std;
 
 
 //! Clase conjunto
- /*! conjunto<T,CMP>::conjunto, find, size,  insert, erase, 
-
- * Tipos conjunto<T,CMP>::value_type, conjunto<T,CMP>::size_type, conjunto<T,CMP>::iterator, conjunto<T,CMP>::const_iterator
-
+ /*! conjunto::conjunto, find, size,  
+ * Tipos conjunto::value_type, conjunto::size_type 
+ * Iteradores:iterator, impar_iterator, secure_iterator;
  * Descripción
 
-* Un conjunto es un contenedor que permite almacenar en orden creciente un conjunto de elementos no repetidos.  En nuestro caso el conjunto va a tener un subconjunto restringido de métodos (inserción de elementos, consulta de un elemento, etc). Este conjunto "simulará" un conjunto de la stl, con algunas claras diferencias pues, entre otros,  no estará dotado de la capacidad de iterar (recorrer) a través de sus elementos.
+* Un conjunto es un contenedor que permite almacenar en orden creciente un conjunto de elementos no repetidos.  
 
-* Asociado al conjunto, tendremos el tipo  \code conjunto::value_type \endcode que permite hacer referencia al elemento  almacenados en cada una de las posiciones del conjunto, en nuestro caso mutaciones (SNPs). Es requisito que el tipo conjunto::value_type tenga definida una relación de orden, CMP, y el operador de asignación, operator= .
+* Asociado al conjunto, tendremos el tipo  \code conjunto::value_type \endcode que permite hacer referencia al elemento  almacenados en cada una de las posiciones del conjunto. Es requisito que el tipo conjunto::value_type tenga definidos los operadores operator< y operator= .
 
 * El número de elementos en el conjunto puede variar dinámicamente; la gestión de la memoria es automática. 
  
@@ -33,26 +26,27 @@ using namespace std;
  */
 
 
-template <class T, class CMP>
-class conjunto {  
+
+
+template <typename T, class CMP>
+class conjunto
+{  
 public:
-
-	/** @brief value_type es el tipo con el que se trabaja en conjunto*/
 	typedef T value_type;
-
-	/** @brief compare_type es el criterio de comparacion que utiliza el cojunto*/
-	typedef CMP compare_type;
-
-	/** @brief size_type es el tipo utilizado para medir el tamaño del cojunto*/
 	typedef unsigned int size_type;
 
-	/** @brief iterator es el tipo utilizado para el iterador del cojunto*/
-	typedef typename vector<value_type>::iterator iterator;
+	//Clases de iteradores. Atributos y métodos definidos abajo.
+	//@todo Implementa las clases de iteradores.  
+	class iterator;
+	class impar_iterator;
+	class secure_iterator;
+	//Clases de iteradores constantes. 
+	//@todo Implementa las clases de iteradores constantes. 
+	class const_iterator;
+	class const_impar_iterator;
+	class const_secure_iterator;
 
-	/** @brief iterator es el tipo utilizado para el iterador constante del cojunto*/
-	typedef typename vector<value_type>::const_iterator const_iterator;
-
-
+	
 	/** @brief constructor primitivo. 
 	*/
 	conjunto( );
@@ -68,7 +62,6 @@ public:
 	@param[in] s: entrada  a buscar. 
 	@return Si existe una entrada en el conjunto con ese valor devuelve el iterador a su posicion, en caso contrario devuelve iterador al final de conjunto
 	@post no modifica el conjunto.
-	
 	*/
 	iterator  find (const value_type & s) ;
 	const_iterator  find (const value_type & s) const;
@@ -76,9 +69,8 @@ public:
 
 
 	/** @brief cuenta cuantas entradas coinciden con los parámetros dados. 
-
 	@param[in] e entrada. 
-	@return Como el conjunto no puede tener entradas repetidas, devuelve 1 (si se encuentra la entrada) o 0 (si no se encuentra).
+	@return Como el conjunto de mutaciones no puede tener entradas repetidas, devuelve 1 (si se encuentra la entrada) o 0 (si no se encuentra).
 	@post no modifica el conjunto.
 	*/
 	
@@ -89,10 +81,11 @@ public:
 	/** @brief Inserta una entrada en el conjunto
 	@param val entrada a insertar
 	@return un par donde el segundo campo vale true si la entrada se ha podido insertar con éxito, esto es, no existe una mutación con igual valor en el conjunto. False en caso contrario. 
-	El primer campo del par devuelve un iterador al elemento insertado, o end() si no fue posible la insercion
+    El primer campo del par devuelve un iterador al elemento insertado, o end() si no fue posible la insercion
    	@post Si e no esta en el conjunto, el size() sera incrementado en 1.
 	*/
-	pair<iterator,bool> insert (const value_type& val);	
+	pair<iterator,bool> insert (const value_type& val);
+	
 	
 	/** @brief Borra una entrada en el conjunto .
 	Busca la entrada y si la encuentra la borra.
@@ -131,37 +124,48 @@ public:
 	conjunto & operator=( const conjunto & org);
 
 	/** @brief begin del conjunto
-	@return Devuelve un iterador al primer elemento del conjunto. Si no existe devuelve end
-	@post no modifica el conjunto.
+	@return Devuelve un iterador (o iterador constante, respectivamente) al primer elemento del conjunto. Si no existe devuelve end
 	*/
-	conjunto::iterator begin ();
+	iterator begin ();
+	const_iterator cbegin () const;
 
 	/** @brief end del conjunto
-	@return Devuelve un iterador al final del conjunto (posicion siguiente al ultimo).
+	@return Devuelve un iterador (o iterador constante, respectivamente) al final del conjunto (posicion siguiente al ultimo.
 	@post no modifica el conjunto.
 	*/
-	conjunto::iterator end ();
+	iterator end ();
+	const_iterator cend () const;
+
 
 	/** @brief begin del conjunto
-	@return Devuelve un iterador constante al primer elemento del conjunto. Si no existe devuelve cend
-	@post no modifica el conjunto.
+	@return Devuelve un iterador seguro (o iterador seguro constante, respectivamente) al primer elemento del conjunto. Si no existe devuelve end
 	*/
-	conjunto::const_iterator cbegin () const;
+	secure_iterator sbegin ();
+	const_secure_iterator csbegin( ) const;
 
 	/** @brief end del conjunto
-	@return Devuelve un iterador constante al final del conjunto (posicion siguiente al ultimo.
+	@return Devuelve un iterador seguro (o iterador seguro constante, respectivamente) al final del conjunto (posicion siguiente al ultimo.
 	@post no modifica el conjunto.
 	*/
-	conjunto::const_iterator cend () const;
+	secure_iterator send ();
+	const_secure_iterator csend( ) const;
 
+	/** @brief begin del conjunto
+	@return Devuelve un iterador impar (o iterador impar constante, respectivamente) al primer elemento (de posición impar) del conjunto. Si no existe devuelve end
+	*/
+	impar_iterator ibegin();
+   	const_impar_iterator cibegin( ) const;
 
-
+ 	/** @brief end del conjunto
+	@return Devuelve un iterador impar (o iterador impar constante, respectivamente) al final del conjunto (posicion siguiente al ultimo.
+	*/
+ 	impar_iterator iend();
+  	const_impar_iterator ciend( ) const;
+   
 
 	/** @brief busca primer elemento por debajo ('antes', '<') de los parámetros dados. 
-
 	@param[in] val entrada.  
 	@return Devuelve un iterador al primer elemento que cumple que "elemento<e" es falso, esto es, el primer elemento que  es mayor o igual que val
-	
 	Si no existe devuelve end
 	@post no modifica el conjunto.
 	*/
@@ -170,27 +174,144 @@ public:
 
 
 	/** @brief busca primer elemento por encima ('después', '>') de los parámetros dados. 
-
 	@param[in] val entrada. Devuelve un iterador al primer elemento que cumple que "elemento>e", esto es, el primer elemento ESTRICTAMENTE mayor que val
-
-
 	Si no existe devuelve end
 	@post no modifica el conjunto.
 	*/
-      iterator upper_bound (const value_type& val);
+    iterator upper_bound (const value_type& val);
 	const_iterator upper_bound (const value_type& val) const;
+ 
 
-	   
-	 
+
+	class iterator{
+		public:
+			iterator();
+			iterator(const iterator &  x);
+			iterator(const secure_iterator &  x); // Transforma secure_iterator en iterator;
+			
+			const value_type & operator*();
+			iterator & operator++();
+			iterator operator++(int i);
+			iterator & operator--();
+			iterator operator--(int i);
+			bool operator==(const iterator & x) const ;		  
+			bool operator!=(const iterator & x) const ;
+			iterator & operator=(const iterator & x);
+		private:
+			friend class conjunto<T,CMP>;
+			typename vector<T>::iterator it;
+			vector<value_type> *elvector;
+	};
+
+	class secure_iterator{
+		public:
+			secure_iterator();
+			secure_iterator(const secure_iterator &  x);
+			const value_type & operator*();
+			secure_iterator & operator++();
+			secure_iterator operator++(int i);
+			secure_iterator & operator--();
+			secure_iterator operator--(int i);
+			bool operator==(const secure_iterator & x) const ;
+			bool operator!=(const secure_iterator & x) const ;
+			secure_iterator & operator=(const secure_iterator & x);
+		private:
+			friend class conjunto<T,CMP>;
+			typename vector<T>::iterator it;
+			vector<value_type> *elvector;
+	};
+
+
+	class impar_iterator{
+		public:
+			impar_iterator();
+			impar_iterator(const impar_iterator &  x);
+			const value_type& operator*();
+			impar_iterator & operator++();
+			impar_iterator operator++(int i);
+			bool operator==(const impar_iterator & x) const;
+			bool operator!=(const impar_iterator & x) const;
+			impar_iterator & operator=(const impar_iterator & x);
+		private:
+			friend class conjunto<T,CMP>;
+			typename vector<T>::iterator it;
+			vector<value_type> *elvector;
+	};
+
+		class const_iterator{
+		public:
+			const_iterator();
+			const_iterator(const const_iterator &  x);
+			const_iterator(const iterator &  x);
+			const_iterator(const const_secure_iterator &  x); // Transforma secure_iterator en iterator;
+			
+			const value_type operator*() const;
+			const_iterator & operator++();
+			const_iterator operator++(int i);
+			const_iterator & operator--();
+			const_iterator operator--(int i);
+			bool operator==(const const_iterator & x) const ;		  
+			bool operator!=(const const_iterator & x) const ;
+			const_iterator & operator=(const const_iterator & x);
+		private:
+			friend class conjunto<T,CMP>;
+			typename vector<T>::const_iterator it;
+			vector<value_type> *elvector;
+	};
+
+	class const_secure_iterator{
+		public:
+			const_secure_iterator();
+			const_secure_iterator(const const_secure_iterator &  x);
+			const value_type operator*() const;
+			const_secure_iterator & operator++();
+			const_secure_iterator operator++(int i);
+			const_secure_iterator & operator--();
+			const_secure_iterator operator--(int i);
+			bool operator==(const const_secure_iterator & x) const ;
+			bool operator!=(const const_secure_iterator & x) const ;
+			const_secure_iterator & operator=(const const_secure_iterator & x);
+		private:
+			friend class conjunto<T,CMP>;
+			typename vector<T>::const_iterator it;
+			vector<value_type> *elvector;
+	};
+
+
+	class const_impar_iterator{
+		public:
+			const_impar_iterator();
+			const_impar_iterator(const const_impar_iterator &  x);
+			const value_type operator*() const;
+			const_impar_iterator & operator++();
+			const_impar_iterator operator++(int i);
+			bool operator==(const const_impar_iterator & x) const;
+			bool operator!=(const const_impar_iterator & x) const;
+			const_impar_iterator & operator=(const const_impar_iterator & x);
+		private:
+			friend class conjunto<T,CMP>;
+			typename vector<T>::const_iterator it;
+			vector<value_type> *elvector;
+	};
+	
 private:
-	vector<value_type> vm; // vector que almacena los elementos del conjunto	
-	compare_type comp;
+	friend class impar_iterator;
+	friend class secure_iterator;
+	friend class iterator;
+	friend class const_impar_iterator;
+	friend class const_secure_iterator;
+	friend class const_iterator;
+	vector<value_type> vm; // vector que almacena los elementos del conjunto
+	CMP comp; // criterio para guiar la ordenacion
+	
+
+		
 	/** @brief Chequea el Invariante de la representacion 
 	    @return true si el invariante es correcto, falso en caso contrario
 	*/
 	bool cheq_rep( ) const;
+	  
 };
-
 
 /** @brief imprime todas las entradas del conjunto 
 @post No se modifica el conjunto.
