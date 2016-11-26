@@ -189,7 +189,7 @@ public:
 			iterator(const iterator &  x);
 			iterator(const secure_iterator &  x); // Transforma secure_iterator en iterator;
 			
-			const value_type & operator*();
+			const conjunto<T,CMP>::value_type & operator*();
 			iterator & operator++();
 			iterator operator++(int i);
 			iterator & operator--();
@@ -200,14 +200,14 @@ public:
 		private:
 			friend class conjunto<T,CMP>;
 			typename vector<T>::iterator it;
-			vector<value_type> *elvector;
+			vector<conjunto<T,CMP>::value_type> *elvector;
 	};
 
 	class secure_iterator{
 		public:
 			secure_iterator();
 			secure_iterator(const secure_iterator &  x);
-			const value_type & operator*();
+			const conjunto<T,CMP>::value_type & operator*();
 			secure_iterator & operator++();
 			secure_iterator operator++(int i);
 			secure_iterator & operator--();
@@ -218,7 +218,7 @@ public:
 		private:
 			friend class conjunto<T,CMP>;
 			typename vector<T>::iterator it;
-			vector<value_type> *elvector;
+			vector<conjunto<T,CMP>::value_type> *elvector;
 	};
 
 
@@ -235,7 +235,7 @@ public:
 		private:
 			friend class conjunto<T,CMP>;
 			typename vector<T>::iterator it;
-			vector<value_type> *elvector;
+			vector<conjunto<T,CMP>::value_type> *elvector;
 	};
 
 		class const_iterator{
@@ -245,7 +245,7 @@ public:
 			const_iterator(const iterator &  x);
 			const_iterator(const const_secure_iterator &  x); // Transforma secure_iterator en iterator;
 			
-			const value_type operator*() const;
+			const conjunto<T,CMP>::value_type operator*() const;
 			const_iterator & operator++();
 			const_iterator operator++(int i);
 			const_iterator & operator--();
@@ -256,14 +256,14 @@ public:
 		private:
 			friend class conjunto<T,CMP>;
 			typename vector<T>::const_iterator it;
-			vector<value_type> *elvector;
+			const vector<conjunto<T,CMP>::value_type> *elvector;
 	};
 
 	class const_secure_iterator{
 		public:
 			const_secure_iterator();
 			const_secure_iterator(const const_secure_iterator &  x);
-			const value_type operator*() const;
+			const conjunto<T,CMP>::value_type operator*() const;
 			const_secure_iterator & operator++();
 			const_secure_iterator operator++(int i);
 			const_secure_iterator & operator--();
@@ -274,7 +274,7 @@ public:
 		private:
 			friend class conjunto<T,CMP>;
 			typename vector<T>::const_iterator it;
-			vector<value_type> *elvector;
+			const vector<conjunto<T,CMP>::value_type> *elvector;
 	};
 
 
@@ -282,7 +282,7 @@ public:
 		public:
 			const_impar_iterator();
 			const_impar_iterator(const const_impar_iterator &  x);
-			const value_type operator*() const;
+			const conjunto<T,CMP>::value_type operator*() const;
 			const_impar_iterator & operator++();
 			const_impar_iterator operator++(int i);
 			bool operator==(const const_impar_iterator & x) const;
@@ -291,16 +291,16 @@ public:
 		private:
 			friend class conjunto<T,CMP>;
 			typename vector<T>::const_iterator it;
-			vector<value_type> *elvector;
+			const vector<conjunto<T,CMP>::value_type> *elvector;
 	};
-	
-private:
-	friend class impar_iterator;
+		friend class impar_iterator;
 	friend class secure_iterator;
 	friend class iterator;
 	friend class const_impar_iterator;
 	friend class const_secure_iterator;
 	friend class const_iterator;
+private:
+
 	vector<value_type> vm; // vector que almacena los elementos del conjunto
 	CMP comp; // criterio para guiar la ordenacion
 	
