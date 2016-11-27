@@ -72,15 +72,15 @@ typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::find (const typename conjun
 	typename conjunto<T,CMP>::iterator itb = begin();
 	unsigned int ini = 0, fin = size(), med;
 	bool esta = false;
-
 	while(ini < fin && !esta) {
 		med = (ini + fin)/2;
+		cerr << "iterator [ " << ini << " , " << fin << " ]" << "Med = " << med << endl;
 		if(vm[med]==s)
 			esta = true;
 		else if(comp(vm[med],s))
 			ini = med;
 		else
-			fin = med;
+			fin = med;	
 	}
 
 	if(esta)
@@ -99,9 +99,10 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::find(const typename co
 
 	while(ini < fin && !esta) {
 		med = (ini + fin)/2;
+		cerr << "const_iterator [ " << ini << " , " << fin << " ]" << "Med = " << med << endl;
 		if(vm[med]==s)
 			esta = true;
-		else if(comp(vm[med],s))
+		else if(cmp(vm[med],s))
 			ini = med;
 		else
 			fin = med;
@@ -313,7 +314,11 @@ typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::csbegin( ) cons
 template<typename T,typename CMP>
 typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::send (){
 	typename conjunto<T,CMP>::secure_iterator its;
-	its.it=vm.end();
+	if(size()%2==0)
+		its.it=vm.end()+1;
+	else
+		its.it=vm.end();
+	
 	its.elvector=&vm;
 	return its;
 }
@@ -321,7 +326,10 @@ typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::send (){
 template<typename T,typename CMP>
 typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::csend( ) const{
 	typename conjunto<T,CMP>::const_secure_iterator itcs;
-	itcs.it=vm.cend();
+	if(size()%2==0)
+		itcs.it=vm.cend()+1;
+	else
+		itcs.it=vm.cend();
 	itcs.elvector=&vm;
 	return itcs;
 }
