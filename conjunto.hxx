@@ -75,9 +75,9 @@ typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::find (const typename conjun
 	unsigned int ini = 0, fin = size(), med;
 	bool esta = false;
 
-	while(ini < fin && !esta) {
+	while(ini < fin && !esta){
 		med = (ini + fin)/2;
-		if(vm[med]==s)
+		if(vm[med] == s)
 			esta = true;
 		else if(comp(s,vm[med]))
 			fin = med-1;
@@ -85,7 +85,7 @@ typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::find (const typename conjun
 			ini = med+1;
 	}
 
-	if(esta)
+	if(esta || (ini == fin && vm[ini] == s))
 		itb.it += med;
 	else
 		itb.it = vm.end();
