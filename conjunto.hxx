@@ -95,24 +95,24 @@ typename conjunto<T,CMP>::iterator  conjunto<T,CMP>::find (const typename conjun
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::find(const typename conjunto<T,CMP>::value_type & s) const {
-	typename conjunto<T,CMP>::const_iterator itb = cbegin();
+	typename conjunto<T,CMP>::iterator itb = begin();
 	unsigned int ini = 0, fin = size(), med;
 	bool esta = false;
 
-	while(ini < fin && !esta) {
+	while(ini < fin && !esta){
 		med = (ini + fin)/2;
 		if(vm[med] == s)
 			esta = true;
-		else if(comp(vm[med],s))
-			++ini;
+		else if(comp(s,vm[med]))
+			fin = med-1;
 		else
-			--fin;
+			ini = med+1;
 	}
 
-	if(esta)
+	if(esta || (ini == fin && vm[ini] == s))
 		itb.it += med;
 	else
-		itb = cend();
+		itb.it = vm.end();
 
 	return itb;
 }
