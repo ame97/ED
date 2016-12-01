@@ -1,5 +1,5 @@
-#ifndef __CONJUNTOIT_H
-#define __CONJUNTOIT_H
+#ifndef __CONJUNTO_H
+#define __CONJUNTO_H
 #include <string>
 #include <vector>
 #include <iostream>
