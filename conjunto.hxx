@@ -155,21 +155,7 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert (const typ
 
 	return pair<conjunto<T,CMP>::iterator,bool>(iti,insertado);
 
-} //cambiar	
-
-
-/** @brief Borra una entrada en el conjunto .
-*	   Busca la entrada con chr/pos o id en el conjunto (utiliza e.getID()
-*	   en el tercer caso) y si la encuentra la borra.
-*   @param[in] chr de la mutación a borrar.
-*   @param[in] pos de la mutación a borrar.
-*   @param[in] ID de la mutación a borrar.
-*   @param[in] e entrada con e.getID() que geremos borrar, el resto de los
-*		 valores no son tenidos en cuenta
-*   @return Devuelve 1 si se consige eliminar satisfactoriamente el elemento,
-*	    0 en caso contrario. 
-*   @post Si esta en el conjunto su tamaño se decrementa en 1.
-*/
+}	
 
 /** @brief Borra una entrada en el conjunto .
 *          Busca la entrada y si la encuentra la borra.
@@ -246,9 +232,9 @@ conjunto<T,CMP> & conjunto<T,CMP>::operator=( const conjunto<T,CMP> & org) {
 
 
 /** @brief begin del conjunto
-    @return Devuelve un iterador (o iterador constante, respectivamente) al primer elemento del conjunto.
+*   @return Devuelve un iterador (o iterador constante, respectivamente) al primer elemento del conjunto.
             Si no existe devuelve end
-    @post no modifica el conjunto.
+*   @post no modifica el conjunto.
 */
 template<typename T,typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::begin (){
@@ -267,8 +253,8 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cbegin () const{
 }
 
 /** @brief end del conjunto
-    @return Devuelve un iterador (o iterador constante, respectivamente) al final del conjunto (posicion siguiente al ultimo.
-    @post no modifica el conjunto.
+*   @return Devuelve un iterador (o iterador constante, respectivamente) al final del conjunto (posicion siguiente al ultimo.
+*   @post no modifica el conjunto.
 */
 template<typename T,typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::end (){
@@ -287,9 +273,9 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cend () const{
 }
 
 /** @brief begin del conjunto
-    @return Devuelve un iterador seguro (o iterador seguro constante, respectivamente) al primer elemento del conjunto.
-            Si no existe devuelve end
-    @post no modifica el conjunto.
+*   @return Devuelve un iterador seguro (o iterador seguro constante, respectivamente) al primer elemento del conjunto.
+*           Si no existe devuelve end
+*   @post no modifica el conjunto.
 */
 template<typename T,typename CMP>
 typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::sbegin (){
@@ -308,9 +294,9 @@ typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::csbegin( ) cons
 }
 
 /** @brief end del conjunto
-    @return Devuelve un iterador seguro (o iterador seguro constante, respectivamente) al final del conjunto
-            (posicion siguiente al ultimo).
-    @post no modifica el conjunto.
+*   @return Devuelve un iterador seguro (o iterador seguro constante, respectivamente) al final del conjunto
+*           (posicion siguiente al ultimo).
+*   @post no modifica el conjunto.
 */
 
 template<typename T,typename CMP>
@@ -330,9 +316,9 @@ typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::csend( ) const{
 }
 
 /** @brief begin del conjunto
-    @return Devuelve un iterador impar (o iterador impar constante, respectivamente) al primer elemento
-            (de posición impar) del conjunto. Si no existe devuelve end
-    @post no modifica el conjunto.
+*   @return Devuelve un iterador impar (o iterador impar constante, respectivamente) al primer elemento
+*           (de posición impar) del conjunto. Si no existe devuelve end
+*   @post no modifica el conjunto.
 */
 
 template<typename T,typename CMP>
@@ -352,9 +338,9 @@ typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::cibegin( ) const
 }
 
 /** @brief end del conjunto
-    @return Devuelve un iterador impar (o iterador impar constante, respectivamente) al final del conjunto 
-            (posicion siguiente al ultimo).
-    @post no modifica el conjunto.
+*   @return Devuelve un iterador impar (o iterador impar constante, respectivamente) al final del conjunto 
+*           (posicion siguiente al ultimo).
+*   @post no modifica el conjunto.
 */
 
 template<typename T,typename CMP>
@@ -425,32 +411,48 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::upper_bound (const typ
 
 /********************************************CLASE ITERATOR*****************************************/
 
+/** @brief Constructor por defecto de iterator */
 template <typename T, typename CMP>
 conjunto<T,CMP>::iterator::iterator() : elvector(NULL) {}
 
+/** @brief Constructor de copia de iterator
+*   @param x Es un iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::iterator::iterator(const typename conjunto<T,CMP>::iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Constructor que convierte un secure_iterator en iterator
+*   @param Es un secure_iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::iterator::iterator(const typename conjunto<T,CMP>::secure_iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Sobrecarga del operador *
+*   @return Devuelve una referencia al objeto apuntado por el iterator
+*/
 template <typename T, typename CMP>
 const typename conjunto<T,CMP>::value_type  & conjunto<T,CMP>::iterator::operator*(){
 	return (*it);
 }
 
+/** @brief Sobrecarga del operador ++(prefijo)
+*   @return Referencia al iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator& conjunto<T,CMP>::iterator::operator++(){
 	++it;
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador ++(postfijo)
+*   @return iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::iterator::operator++(int i){
 	typename conjunto<T,CMP>::iterator itv(*this);
@@ -458,12 +460,18 @@ typename conjunto<T,CMP>::iterator conjunto<T,CMP>::iterator::operator++(int i){
 	return itv;
 }
 
+/** @brief Sobrecarga del operador --(prefijo)
+*   @return Referencia al iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator& conjunto<T,CMP>::iterator::operator--(){
 	--it;
 	return *this;
 }
 
+/** @brief Sobrecarga del operador --(postfijo)
+*   @return iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::iterator::operator--(int i){
 	typename conjunto<T,CMP>::iterator itv(*this);
@@ -471,16 +479,28 @@ typename conjunto<T,CMP>::iterator conjunto<T,CMP>::iterator::operator--(int i){
 	return itv;
 }
 
+/** @brief Sobrecarga del operador ==
+*   @param x Es un iterator
+*   @return ¿El iterator es igual que @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::iterator::operator==(const typename conjunto<T,CMP>::iterator & x) const{
 	return (it == x.it);
 }
 
+/** @brief Sobrecarga del operador !=
+*   @param x Es un iterator
+*   @return ¿El iterator es distinto de @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::iterator::operator!=(const typename conjunto<T,CMP>::iterator & x) const{
 	return (it != x.it);
 }
 
+/**@brief Sobrecarga del operador =
+*  @param x Es un iterator
+*  @return Devuelve una referencia al iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator & conjunto<T,CMP>::iterator::operator=(const typename conjunto<T,CMP>::iterator& x){
 	if(this != &x) {
@@ -493,21 +513,31 @@ typename conjunto<T,CMP>::iterator & conjunto<T,CMP>::iterator::operator=(const 
 
 /***************************************CLASE SECURE ITERATOR***************************************/
 
+/** @brief Constructor por defecto de secure_iterator */
 template <typename T, typename CMP>
 conjunto<T,CMP>::secure_iterator::secure_iterator() : elvector(NULL) {}
 
+/** @brief Constructor de copia de secure_iterator
+*   @param x Es un secure_iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::secure_iterator::secure_iterator(const typename conjunto<T,CMP>::secure_iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Sobrecarga del operador *
+*   @return Devuelve una referencia al objeto apuntado por el secure_iterator
+*/
 template <typename T, typename CMP>
 const typename conjunto<T,CMP>::value_type  & conjunto<T,CMP>::secure_iterator::operator*(){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
 	return (*it);
 }
 
+/** @brief Sobrecarga del operador ++(prefijo)
+*   @return Referencia al secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator++(){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -516,6 +546,9 @@ typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::ope
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador ++(postfijo)
+*   @return secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::secure_iterator::operator++(int i){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -524,6 +557,9 @@ typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::secure_iterator::oper
 	return itv;
 }
 
+/** @brief Sobrecarga del operador --(prefijo)
+*   @return Referencia al secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator--(){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -531,6 +567,9 @@ typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::ope
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador --(postfijo)
+*   @return secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::secure_iterator::operator--(int i){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -539,18 +578,30 @@ typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::secure_iterator::oper
 	return itv;
 }
 
+/** @brief Sobrecarga del operador ==
+*   @param x Es un secure_iterator
+*   @return ¿El secure_iterator es igual que @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::secure_iterator::operator==(const typename conjunto<T,CMP>::secure_iterator & x) const{
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
 	return (it == x.it);
 }
 
+/** @brief Sobrecarga del operador !=
+*   @param x Es un secure_iterator
+*   @return ¿El secure_iterator es distinto de @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::secure_iterator::operator!=(const typename conjunto<T,CMP>::secure_iterator & x) const{
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
 	return (it != x.it);
 }
 
+/**@brief Sobrecarga del operador =
+*  @param x Es un secure_iterator
+*  @return Devuelve una referencia al secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator & conjunto<T,CMP>::secure_iterator::operator=(const typename conjunto<T,CMP>::secure_iterator& x){
 	if(this != &x) {
@@ -563,26 +614,39 @@ typename conjunto<T,CMP>::secure_iterator & conjunto<T,CMP>::secure_iterator::op
 
 /****************************************CLASE IMPAR ITERATOR***************************************/
 
+/** @brief Constructor por defecto de impar_iterator */
 template <typename T, typename CMP>
 conjunto<T,CMP>::impar_iterator::impar_iterator() : elvector(NULL) {}
 
+/** @brief Constructor de copia de impar_iterator
+*   @param x Es un impar_iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::impar_iterator::impar_iterator(const typename conjunto<T,CMP>::impar_iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Sobrecarga del operador *
+*   @return Devuelve una referencia al objeto apuntado por el impar_iterator
+*/
 template <typename T, typename CMP>
 const typename conjunto<T,CMP>::value_type  & conjunto<T,CMP>::impar_iterator::operator*(){
 	return (*it);
 }
 
+/** @brief Sobrecarga del operador ++(prefijo)
+*   @return Referencia al impar_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator& conjunto<T,CMP>::impar_iterator::operator++(){
 	it += 2;
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador ++(postfijo)
+*   @return impar_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::impar_iterator::operator++(int i){
 	typename conjunto<T,CMP>::impar_iterator itv(*this);
@@ -590,16 +654,28 @@ typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::impar_iterator::operat
 	return itv;
 }
 
+/** @brief Sobrecarga del operador ==
+*   @param x Es un impar_iterator
+*   @return ¿El impar_iterator es igual que @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::impar_iterator::operator==(const typename conjunto<T,CMP>::impar_iterator & x) const{
 	return (it == x.it);
 }
 
+/** @brief Sobrecarga del operador !=
+*   @param x Es un impar_iterator
+*   @return ¿El impar_iterator es distinto de @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::impar_iterator::operator!=(const typename conjunto<T,CMP>::impar_iterator & x) const{
 	return (it != x.it);
 }
 
+/**@brief Sobrecarga del operador =
+*  @param x Es un impar_iterator
+*  @return Devuelve una referencia al impar_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator & conjunto<T,CMP>::impar_iterator::operator=(const typename conjunto<T,CMP>::impar_iterator& x){
 	if(this != &x) {
@@ -612,39 +688,58 @@ typename conjunto<T,CMP>::impar_iterator & conjunto<T,CMP>::impar_iterator::oper
 
 /*************************************CLASE CONST ITERATOR******************************************/
 
+/** @brief Constructor por defecto de const_iterator */
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_iterator::const_iterator() : elvector(NULL) {}
 
+/** @brief Constructor de copia de const_iterator
+*   @param x Es un const_iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_iterator::const_iterator(const typename conjunto<T,CMP>::const_iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Constructor que convierte un iterator en const_iterator
+*   @param Es un iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_iterator::const_iterator(const typename conjunto<T,CMP>::iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Constructor que convierte un const_secure_iterator en const_iterator
+*   @param Es un const_secure_iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_iterator::const_iterator(const typename conjunto<T,CMP>::const_secure_iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Sobrecarga del operador *
+*   @return Devuelve una referencia al objeto apuntado por el const_iterator
+*/
 template <typename T, typename CMP>
 const typename conjunto<T,CMP>::value_type  conjunto<T,CMP>::const_iterator::operator*() const{
 	conjunto<T,CMP>::value_type x = (*it);
 	return x;
 }
 
+/** @brief Sobrecarga del operador ++(prefijo)
+*   @return Referencia al const_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator& conjunto<T,CMP>::const_iterator::operator++(){
 	++it;
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador ++(postfijo)
+*   @return const_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::const_iterator::operator++(int i){
 	typename conjunto<T,CMP>::const_iterator itv(*this);
@@ -652,12 +747,18 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::const_iterator::operat
 	return itv;
 }
 
+/** @brief Sobrecarga del operador --(prefijo)
+*   @return Referencia al const_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator& conjunto<T,CMP>::const_iterator::operator--(){
 	--it;
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador --(postfijo)
+*   @return const_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::const_iterator::operator--(int i){
 	typename conjunto<T,CMP>::const_iterator itv(*this);
@@ -665,16 +766,29 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::const_iterator::operat
 	return itv;
 }
 
+/** @brief Sobrecarga del operador ==
+*   @param x Es un const_iterator
+*   @return ¿El const_iterator es igual que @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_iterator::operator==(const typename conjunto<T,CMP>::const_iterator & x) const{
 	return (it == x.it);
 }
 
+
+/** @brief Sobrecarga del operador !=
+*   @param x Es un const_iterator
+*   @return ¿El const_iterator es distinto de @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_iterator::operator!=(const typename conjunto<T,CMP>::const_iterator & x) const{
 	return (it != x.it);
 }
 
+/**@brief Sobrecarga del operador =
+*  @param x Es un const_iterator
+*  @return Devuelve una referencia al const_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator & conjunto<T,CMP>::const_iterator::operator=(const typename conjunto<T,CMP>::const_iterator& x){
 	if(this != &x) {
@@ -687,15 +801,22 @@ typename conjunto<T,CMP>::const_iterator & conjunto<T,CMP>::const_iterator::oper
 
 /*********************************CLASE CONST SECURE ITERATOR***************************************/
 
+/** @brief Constructor por defecto de const_secure_iterator */
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_secure_iterator::const_secure_iterator() : elvector(NULL) {}
 
+/** @brief Constructor de copia de const_secure_iterator
+*   @param x Es un const_secure_iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_secure_iterator::const_secure_iterator(const typename conjunto<T,CMP>::const_secure_iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Sobrecarga del operador *
+*   @return Devuelve una referencia al objeto apuntado por el const_secure_iterator
+*/
 template <typename T, typename CMP>
 const typename conjunto<T,CMP>::value_type conjunto<T,CMP>::const_secure_iterator::operator*() const{
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -703,6 +824,9 @@ const typename conjunto<T,CMP>::value_type conjunto<T,CMP>::const_secure_iterato
 	return x;
 }
 
+/** @brief Sobrecarga del operador ++(prefijo)
+*   @return Referencia al const_secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_iterator::operator++(){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -710,6 +834,9 @@ typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_i
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador ++(postfijo)
+*   @return const_secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::const_secure_iterator::operator++(int i){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -718,6 +845,9 @@ typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::const_secure_it
 	return itv;
 }
 
+/** @brief Sobrecarga del operador --(prefijo)
+*   @return Referencia al const_secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_iterator::operator--(){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -725,6 +855,9 @@ typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_i
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador --(postfijo)
+*   @return const_secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::const_secure_iterator::operator--(int i){
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
@@ -733,18 +866,30 @@ typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::const_secure_it
 	return itv;
 }
 
+/** @brief Sobrecarga del operador ==
+*   @param x Es un const_sucure_iterator
+*   @return ¿El const_secure_iterator es igual que @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_secure_iterator::operator==(const typename conjunto<T,CMP>::const_secure_iterator & x) const{
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
 	return (it == x.it);
 }
 
+/** @brief Sobrecarga del operador !=
+*   @param x Es un const_secure_iterator
+*   @return ¿El const_secure_iterator es distinto de @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_secure_iterator::operator!=(const typename conjunto<T,CMP>::const_secure_iterator & x) const{
 	assert(&(*elvector)[0] < &(*it) && &(*it) <= &(*elvector)[elvector->size()]);
 	return (it != x.it);
 }
 
+/**@brief Sobrecarga del operador =
+*  @param x Es un const_secure_iterator
+*  @return Devuelve una referencia al const_secure_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_secure_iterator & conjunto<T,CMP>::const_secure_iterator::operator=(const  typename conjunto<T,CMP>::const_secure_iterator& x){
 	if(this != &x) {
@@ -757,21 +902,31 @@ typename conjunto<T,CMP>::const_secure_iterator & conjunto<T,CMP>::const_secure_
 
 /**********************************CLASE CONST IMPAR ITERATOR***************************************/
 
+/** @brief Constructor por defecto de const_impar_iterator */
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_impar_iterator::const_impar_iterator() : elvector(NULL) {}
 
+/** @brief Constructor de copia de const_impar_iterator
+*   @param x Es un const_impar_iterator
+*/
 template <typename T, typename CMP>
 conjunto<T,CMP>::const_impar_iterator::const_impar_iterator(const typename conjunto<T,CMP>::const_impar_iterator &  x){
 	elvector = x.elvector;
 	it = x.it;
 }
 
+/** @brief Constructor de copia de const_impar_iterator
+*   @param x Es un const_impar_iterator
+*/
 template <typename T, typename CMP>
 const typename conjunto<T,CMP>::value_type conjunto<T,CMP>::const_impar_iterator::operator*() const{
 	typename conjunto<T,CMP>::value_type x = (*it);
 	return x;
 }
 
+/** @brief Sobrecarga del operador ++(prefijo)
+*   @return Referencia al const_impar_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_impar_iterator& conjunto<T,CMP>::const_impar_iterator::operator++(){
 	it += 2;
@@ -779,6 +934,9 @@ typename conjunto<T,CMP>::const_impar_iterator& conjunto<T,CMP>::const_impar_ite
 	return (*this);
 }
 
+/** @brief Sobrecarga del operador ++(postfijo)
+*   @return const_impar_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::const_impar_iterator::operator++(int i){
 	typename conjunto<T,CMP>::impar_iterator itv(*this);
@@ -786,16 +944,28 @@ typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::const_impar_iter
 	return itv;
 }
 
+/** @brief Sobrecarga del operador ==
+*   @param x Es un const_impar_iterator
+*   @return ¿El const_impar_iterator es igual que @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_impar_iterator::operator==(const typename conjunto<T,CMP>::const_impar_iterator & x) const{
 	return (it == x.it);
 }
 
+/** @brief Sobrecarga del operador !=
+*   @param x Es un const_impar_iterator
+*   @return ¿El const_impar_iterator es distinto de @a x?
+*/
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_impar_iterator::operator!=(const typename conjunto<T,CMP>::const_impar_iterator & x) const{
 	return (it != x.it);
 }
 
+/**@brief Sobrecarga del operador =
+*  @param x Es un const_impar_iterator
+*  @return Devuelve una referencia al const_impar_iterator
+*/
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_impar_iterator & conjunto<T,CMP>::const_impar_iterator::operator=(const typename conjunto<T,CMP>::const_impar_iterator& x){
 	if(this != &x) {
